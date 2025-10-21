@@ -121,3 +121,5 @@ Bash
 
 このプロジェクトは MIT License で公開されてるであります！
 
+
+## This project was created with the [Solid CLI](https://github.com/solidjs-community/solid-cli)

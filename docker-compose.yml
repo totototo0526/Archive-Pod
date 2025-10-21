@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # 1. データベース (PostgreSQL) のお部屋
+  db:
+    image: postgres:16-alpine
+    container_name: archive_pod_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # ports:
+    #   # ↓これは 'localhost:5432' になるので、ホストNginxとはケンカしない（けど、ホストからは丸見え）
+    #   - "127.0.0.1:5432:5432" # 127.0.0.1に限定すると、より安全であります！
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  # 2. バックエンド (Go言語 API) のお部屋
+  backend:
+    container_name: archive_pod_backend
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      # ↓これを 'localhost:8080' にします
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  # 3. フロントエンド (SolidJS 開発サーバー) のお部屋
+  frontend:
+    container_name: archive_pod_frontend
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      # ↓これを 'localhost:5173' にします
+      - "127.0.0.1:5173:5173"
+    restart: unless-stopped
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+volumes:
+  postgres_data:

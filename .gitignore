@@ -1,21 +1,28 @@
-# --- 秘密のコト！絶対にココに入れるであります！ ---
+dist
+.wrangler
+.output
+.vercel
+.netlify
+.vinxi
+app.config.timestamp_*.js
+
+# Environment
 .env
-*.env
-docker-compose.yml
+.env*.local
 
-# --- 開発用のファイル ---
-# (もしdocker-compose.ymlをGit管理したい場合は、
-# .envだけをignoreして、docker-compose.ymlからは
-# 環境変数を読み込むようにするのがプロであります！)
+# dependencies
+/node_modules
 
-# --- SolidJS/Node.jsのお部屋のゴミ ---
-frontend/node_modules/
-frontend/dist/
-frontend/.solid/
-frontend/.output/
-npm-debug.log*
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
 
-# --- Go言語のお部屋のゴミ ---
-# ビルドしたバイナリ
-backend/archive-pod-api
-*.exe
+# Temp
+gitignore
+
+# System Files
+.DS_Store
+Thumbs.db
