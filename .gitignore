@@ -1,0 +1,21 @@
+# --- 秘密のコト！絶対にココに入れるであります！ ---
+.env
+*.env
+docker-compose.yml
+
+# --- 開発用のファイル ---
+# (もしdocker-compose.ymlをGit管理したい場合は、
+# .envだけをignoreして、docker-compose.ymlからは
+# 環境変数を読み込むようにするのがプロであります！)
+
+# --- SolidJS/Node.jsのお部屋のゴミ ---
+frontend/node_modules/
+frontend/dist/
+frontend/.solid/
+frontend/.output/
+npm-debug.log*
+
+# --- Go言語のお部屋のゴミ ---
+# ビルドしたバイナリ
+backend/archive-pod-api
+*.exe
