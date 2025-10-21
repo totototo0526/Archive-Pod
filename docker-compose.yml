@@ -11,9 +11,9 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # ports:
+    ports:
     #   # ↓これは 'localhost:5432' になるので、ホストNginxとはケンカしない（けど、ホストからは丸見え）
-    #   - "127.0.0.1:5432:5432" # 127.0.0.1に限定すると、より安全であります！
+      - "0.0.0.0:15432:5432" # 127.0.0.1に限定すると、より安全であります！
     restart: unless-stopped
     env_file:
       - .env
@@ -25,6 +25,7 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app
+      - /var/www/archive_uploads:/app/uploads
     ports:
       # ↓これを 'localhost:8080' にします
       - "127.0.0.1:8080:8080"
@@ -48,5 +49,7 @@ services:
     restart: unless-stopped
     environment:
       - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - .env
 volumes:
   postgres_data:
